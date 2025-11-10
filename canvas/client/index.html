@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collaborative Canvas</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/toolbar.css">
+  <link rel="stylesheet" href="css/canvas.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="toolbar">
+      <div class="toolbar-left">
+        <h1 class="app-title">🎨 Collaborative Canvas</h1>
+      </div>
+      
+      <div class="toolbar-center">
+        <div class="tool-group">
+          <label class="section-label">Tool:</label>
+          <button class="tool-btn active" data-tool="brush">🖌️ Brush</button>
+          <button class="tool-btn" data-tool="eraser">🧹 Eraser</button>
+        </div>
+
+        <div class="tool-group">
+          <label class="section-label">Color:</label>
+          <input type="color" id="colorPicker" class="color-picker" value="#000000">
+        </div>
+
+        <div class="tool-group">
+          <label class="section-label">Size:</label>
+          <input type="range" id="brushSize" class="size-slider" min="1" max="50" value="3">
+          <span id="sizeValue" class="size-display">3</span>
+          <span class="size-unit">px</span>
+        </div>
+
+        <div class="tool-group">
+          <button id="undoBtn" class="action-btn">↶ Undo</button>
+          <button id="redoBtn" class="action-btn">↷ Redo</button>
+          <button id="clearBtn" class="action-btn danger">🗑️ Clear</button>
+        </div>
+      </div>
+
+      <div class="toolbar-right">
+        <div class="user-badge">
+          <span id="currentUserColor" class="user-color-dot"></span>
+          <span id="currentUserName" class="user-name">You</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="canvas-section">
+      <div id="canvasContainer" class="canvas-wrapper">
+        <canvas id="backgroundLayer" class="canvas-layer"></canvas>
+        <canvas id="drawingLayer" class="canvas-layer"></canvas>
+        <canvas id="activeLayer" class="canvas-layer"></canvas>
+        <canvas id="cursorLayer" class="canvas-layer"></canvas>
+        
+        <div class="metrics-overlay">
+          <div class="metric-item">
+            <span class="metric-label">FPS:</span>
+            <span id="fpsCounter" class="metric-value">60</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Latency:</span>
+            <span id="latencyCounter" class="metric-value">0</span>
+            <span class="metric-unit">ms</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Users:</span>
+            <span id="userCounter" class="metric-value">1</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="users-sidebar">
+        <h3 class="sidebar-title">Online Users</h3>
+        <div id="usersList" class="users-list"></div>
+      </aside>
+    </main>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/utils/constants.js"></script>
+  <script src="js/utils/eventThrottler.js"></script>
+  <script src="js/canvas/CursorRenderer.js"></script>
+  <script src="js/canvas/DrawingEngine.js"></script>
+  <script src="js/canvas/CanvasManager.js"></script>
+  <script src="js/network/SocketHandler.js"></script>
+  <script src="js/ui/ToolbarController.js"></script>
+  <script src="js/ui/UserListManager.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
